@@ -1,33 +1,11 @@
 const express = require("express");
-const cars = require("./cars.json");
 const app = express();
 const Bundler = require("parcel-bundler");
 const bundler = new Bundler("src/index.html", { logLevel: 2 });
 
 const PORT = 3001;
 
-app.get("/cars.json", (req, res) => {
-  let availableCars = cars.map((car, i) => {
-    const id = i + 1;
-    return { id, picturePath: `/pictures/${id}.jpg`, ...car };
-  });
-
-  if (req.query.duration) {
-    availableCars = availableCars.filter(
-      ({ availability }) =>
-        parseInt(req.query.duration, 10) <= availability.maxDuration
-    );
-  }
-
-  if (req.query.distance) {
-    availableCars = availableCars.filter(
-      ({ availability }) =>
-        parseInt(req.query.distance, 10) <= availability.maxDistance
-    );
-  }
-
-  res.json(availableCars);
-});
+// write your code here
 
 app.use(express.static("server/public"));
 app.use(bundler.middleware());
